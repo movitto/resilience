@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 # ReFS file searcher
 # By mmorsi - 2014-09-03
 

@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 # ReFS 0x4000 Cluster Extractor
 # By mmorsi - 2014-07-14
 

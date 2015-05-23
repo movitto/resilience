@@ -1,3 +1,4 @@
+#!/usr/bin/ruby
 # ReFS reference analyzer
 # By mmorsi - 2014-09-03
 
