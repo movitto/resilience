@@ -12,17 +12,32 @@ module Resilience
       @bytes = args[:bytes] if args.key?(:bytes)
     end
 
+    def empty?
+      bytes.nil? || bytes.empty?
+    end
+
     def self.read
-      pos      = image.pos
-      attr_len = image.read(4).unpack('L').first
+      pos = image.pos
+      packed = image.read(4)
+      return new if packed.nil?
+      attr_len = packed.unpack('L').first
       return new if attr_len == 0
 
       image.seek pos
-      new(:bytes => image.read(attr_len))
+      value = image.read(attr_len)
+      new(:bytes => value)
     end
 
     def unpack(format)
       bytes.unpack(format)
+    end
+
+    def [](key)
+      return bytes[key]
+    end
+
+    def to_s
+      bytes.collect { |a| a.to_s(16) }.join(' ')
     end
   end
 end # module Resilience

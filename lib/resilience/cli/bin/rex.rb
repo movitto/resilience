@@ -14,26 +14,15 @@ def rex_option_parser
   end
 end
 
-def write_results(results)
+def write_results(image)
   dir = conf[:dir]
   Dir.mkdir(dir) unless File.directory?(dir)
 
-  results[:files].each do |name, contents|
+  files = image.root_dir.files
+  dirs  = image.root_dir.dirs
+  files.each do |name, contents|
     puts "Got #{name}"
     path = "#{dir}/#{name}".delete("\0")
     File.write(path, contents)
   end
-end
-
-def parse_image
-  file         = File.open(conf[:image], 'rb')
-  image        = Resilience::OnImage.image
-  image.file   = file
-  image.offset = conf[:offset]
-  image.opts   = conf
-
-  image.parse
-  files        = image.root_dir.files
-  dirs         = image.root_dir.dirs
-  {:files => files, :dirs => dirs}
 end

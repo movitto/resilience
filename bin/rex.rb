@@ -2,8 +2,6 @@
 # ReFS File Extractor
 # Copyright (C) 2015 Red Hat Inc.
 
-require 'optparse'
-
 require 'resilience'
 require 'resilience/cli/all'
 require 'resilience/cli/bin/rex'
@@ -16,5 +14,4 @@ optparse.parse!
 verify_image!
 verify_output_dir!
 
-results = parse_image
-write_results results
+write_results parse_image

@@ -18,11 +18,15 @@ module Resilience
       table
     end
 
-    def parse_pages
+    # Depends on SystemTable extraction
+    def object_page_id
       # in the images I've seen this has always been the first entry
       # in the system table, though always has virtual page id = 2
       # which we could look for if this turns out not to be the case
-      object_page_id      = image.system_table.pages.first
+      image.system_table.pages.first
+    end
+
+    def parse_pages
       object_page_address = object_page_id * PAGE_SIZE
 
       # read number of objects from index header

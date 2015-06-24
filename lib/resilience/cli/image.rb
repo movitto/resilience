@@ -23,5 +23,18 @@ module Resilience
         exit 1
       end
     end
+
+    def parse_image
+      file         = File.open(conf[:image], 'rb')
+      image.file   = file
+      image.offset = conf[:offset]
+      image.opts   = conf
+      image.parse
+      image
+    end
+
+    def image
+      Resilience::OnImage.image
+    end
   end # module CLI
 end # module Resilience

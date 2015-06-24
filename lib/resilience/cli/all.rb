@@ -8,4 +8,5 @@
 require 'resilience/cli/default'
 require 'resilience/cli/image'
 require 'resilience/cli/fs'
+require 'resilience/cli/metadata'
 require 'resilience/cli/conf'

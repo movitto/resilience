@@ -18,8 +18,12 @@ module Resilience
       table
     end
 
+    def self.first_page_address
+      PAGES[:first] * PAGE_SIZE
+    end
+
     def parse_pages
-      image.seek(FIRST_PAGE_ADDRESS + ADDRESSES[:system_table_page])
+      image.seek(self.class.first_page_address + ADDRESSES[:system_table_page])
       system_table_page    = image.read(8).unpack('Q').first
       system_table_address = system_table_page * PAGE_SIZE 
 
@@ -39,4 +43,3 @@ module Resilience
     end
   end # class SystemTable
 end # module Resilience
-
