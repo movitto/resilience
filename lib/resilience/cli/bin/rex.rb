@@ -8,21 +8,25 @@ require 'optparse'
 
 def rex_option_parser
   OptionParser.new do |opts|
-    default_options   opts
-    image_options     opts
-    output_fs_options opts
+    default_options opts
+    image_options   opts
+    output_options  opts
   end
 end
 
 def write_results(image)
-  dir = conf[:dir]
-  Dir.mkdir(dir) unless File.directory?(dir)
+  create_output_dir!
+
+  dirs  = image.root_dir.dirs
+  dirs.each do |name, contents|
+    puts "Dir: #{name}" if output_dirs?
+  end
 
   files = image.root_dir.files
-  dirs  = image.root_dir.dirs
   files.each do |name, contents|
-    puts "Got #{name}"
-    path = "#{dir}/#{name}".delete("\0")
-    File.write(path, contents)
+    puts "File: #{name}" if output_files?
+
+    path = "#{output_dir}/#{name}".delete("\0")
+    File.write(path, contents) if write_to_output_dir?
   end
 end

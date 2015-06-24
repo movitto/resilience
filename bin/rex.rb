@@ -12,6 +12,4 @@ optparse = rex_option_parser
 optparse.parse!
 
 verify_image!
-verify_output_dir!
-
 write_results parse_image
