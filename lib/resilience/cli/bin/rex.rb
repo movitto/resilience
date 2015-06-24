@@ -8,9 +8,10 @@ require 'optparse'
 
 def rex_option_parser
   OptionParser.new do |opts|
-    default_options opts
-    image_options   opts
-    output_options  opts
+    default_options    opts
+    image_options      opts
+    output_fs_options  opts
+    stdout_options     opts
   end
 end
 
