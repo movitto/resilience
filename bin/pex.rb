@@ -1,14 +1,14 @@
 #!/usr/bin/ruby
-# ReFS 0x4000 Cluster Extractor
+# ReFS 0x4000 Page Extractor
 # By mmorsi - 2014-07-14
 
 require 'resilience'
 require 'resilience/cli/all'
-require 'resilience/cli/bin/cle'
+require 'resilience/cli/bin/pex'
 
 include Resilience::CLI
 
-optparse = cle_option_parser
+optparse = pex_option_parser
 optparse.parse!
 
 verify_image!

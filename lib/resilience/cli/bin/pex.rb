@@ -1,4 +1,4 @@
-# Resilience cle cli util
+# Resilience pex cli util
 #
 # Licensed under the MIT license
 # Copyright (C) 2015 Red Hat, Inc.
@@ -6,7 +6,7 @@
 
 require 'optparse'
 
-def cle_option_parser
+def pex_option_parser
   OptionParser.new do |opts|
     default_options    opts
     image_options      opts
