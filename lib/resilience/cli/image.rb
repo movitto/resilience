@@ -24,11 +24,16 @@ module Resilience
       end
     end
 
-    def parse_image
+    def setup_image
       file         = File.open(conf[:image], 'rb')
       image.file   = file
       image.offset = conf[:offset]
       image.opts   = conf
+      image
+    end
+
+    def parse_image
+      setup_image
       image.parse
       image
     end

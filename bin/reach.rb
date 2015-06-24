@@ -1,15 +1,16 @@
 #!/usr/bin/ruby
-# resilience.rb - Ruby ReFS Parser
+# ReFS file searcher
 # Copyright (C) 2015 Red Hat Inc.
 
 require 'resilience'
 require 'resilience/cli/all'
-require 'resilience/cli/bin/rarser'
+require 'resilience/cli/bin/reach'
 
 include Resilience::CLI
 
-optparse = resilience_option_parser
+optparse = reach_option_parser
 optparse.parse!
 
 verify_image!
-write_results parse_image
+setup_image
+run_search

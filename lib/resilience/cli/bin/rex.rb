@@ -1,4 +1,4 @@
-# Reslience rex cli util
+# Resilience rex cli util
 #
 # Licensed under the MIT license
 # Copyright (C) 2015 Red Hat, Inc.
