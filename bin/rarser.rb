@@ -3,7 +3,7 @@
 
 require 'resilience'
 require 'resilience/cli/all'
-require 'resilience/cli/bin/resilience'
+require 'resilience/cli/bin/rarser'
 
 include Resilience::CLI
 
