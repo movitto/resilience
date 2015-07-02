@@ -5,7 +5,6 @@
 ###########################################################
 
 require 'optparse'
-require 'colored'
 
 def resilience_option_parser
   conf.pages = true
@@ -17,32 +16,6 @@ def resilience_option_parser
   end
 end
 
-def image_output
-  "Analyzed ReFS filesystem on #{conf[:image].green.bold} "\
-  "starting at #{conf[:offset].to_s.green.bold}\n"
-end
-
-def bytes_per_sector_output
-  "#{image.bytes_per_sector.indented.yellow.bold} (bytes per sector)"
-end
-
-def sectors_per_cluster_output
-  "#{image.sectors_per_cluster.indented.yellow.bold} (sectors per cluster)"
-end
-
-def cluster_size_output
-  "#{image.cluster_size.indented.yellow.bold} (bytes per cluster)\n"
-end
-
-def vbr_output
-  "VBR: #{bytes_per_sector_output} * "    \
-       "#{sectors_per_cluster_output} = " \
-       "#{cluster_size_output}"
-end
-
-def header_output
-  image_output + vbr_output
-end
 
 def page_attribute_output(page)
   output = page.attributes.collect { |attribute|

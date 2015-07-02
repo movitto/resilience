@@ -5,8 +5,19 @@
 # Copyright (C) 2015 Red Hat, Inc.
 ###########################################################
 
+require 'colored'
+
 module Resilience
   module CLI
+    OUTPUT_LABELS = {
+      :bps    => "(bytes per sector)",
+      :spc    => "(sectors per cluster)",
+      :bpc    => "(bytes per cluster)",
+      :vbr    => "VBR",
+      :image  => "Analyzed ReFS filesystem on",
+      :offset => "starting at"
+    }
+
     def output_fs_options(option_parser)
       option_parser.on("--write dir", "Write output to directory") do |dir|
         conf.dir = dir
@@ -43,12 +54,31 @@ module Resilience
       Dir.mkdir(output_dir) unless File.directory?(output_dir)
     end
 
-    def output_files?
-      !!conf[:files]
+    def image_output
+      "#{OUTPUT_LABELS[:image]} #{conf.image_file.green.bold} "\
+      "#{OUTPUT_LABELS[:offset]} #{conf.offset.to_s.green.bold}\n"
     end
 
-    def output_dirs?
-      !!conf[:dirs]
+    def header_output
+      image_output + vbr_output
+    end
+
+    def bytes_per_sector_output
+      "#{image.bytes_per_sector.indented.yellow.bold} (#{OUTPUT_LABELS[:bps]})"
+    end
+
+    def sectors_per_cluster_output
+      "#{image.sectors_per_cluster.indented.yellow.bold} (#{OUTPUT_LABELS[:spc]})"
+    end
+
+    def cluster_size_output
+      "#{image.cluster_size.indented.yellow.bold} (#{OUTPUT_LABELS[:bpc]})\n"
+    end
+
+    def vbr_output
+      "#{OUTPUT_LABELS[:vbr]}: #{bytes_per_sector_output} * "    \
+                              "#{sectors_per_cluster_output} = " \
+                              "#{cluster_size_output}"
     end
   end # module CLI
 end # module Resilience
