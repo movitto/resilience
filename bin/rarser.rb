@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-# resilience.rb - Ruby ReFS Parser
+# rarser.rb - Ruby ReFS Parser
 # Copyright (C) 2015 Red Hat Inc.
 
 require 'resilience'
@@ -8,7 +8,7 @@ require 'resilience/cli/bin/rarser'
 
 include Resilience::CLI
 
-optparse = resilience_option_parser
+optparse = rarser_option_parser
 optparse.parse!
 
 verify_image!

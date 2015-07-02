@@ -1,4 +1,4 @@
-# Resilience resilience cli util
+# Resilience rarser cli util
 #
 # Licensed under the MIT license
 # Copyright (C) 2015 Red Hat, Inc.
@@ -6,7 +6,7 @@
 
 require 'optparse'
 
-def resilience_option_parser
+def rarser_option_parser
   conf.pages = true
 
   OptionParser.new do |opts|
