@@ -7,6 +7,7 @@ require 'resilience/core_ext'
 require 'resilience/mixins'
 require 'resilience/constants'
 
+require 'resilience/conf'
 require 'resilience/fs_dir'
 require 'resilience/attribute'
 require 'resilience/page'

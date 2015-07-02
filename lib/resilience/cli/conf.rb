@@ -1,5 +1,5 @@
 #!/usr/bin/ruby
-# Reslience CLI
+# Reslience CLI Conf
 #
 # Licensed under the MIT license
 # Copyright (C) 2015 Red Hat, Inc.
@@ -7,12 +7,8 @@
 
 module Resilience
   module CLI
-    def self.conf
-      @conf ||= {}
-    end
-
     def conf
-      CLI.conf
+      Conf
     end
   end # mdoule CLI
 end
