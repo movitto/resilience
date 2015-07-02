@@ -9,29 +9,29 @@ module Resilience
   module CLI
     def output_fs_options(option_parser)
       option_parser.on("--write dir", "Write output to directory") do |dir|
-        conf[:dir] = dir
+        conf.dir = dir
       end
     end
 
     def stdout_options(option_parser)
       option_parser.on("-f", "--files", "List files in output") do
-        conf[:files] = true
+        conf.files = true
       end
 
       option_parser.on("-d", "--dirs", "List dirs in output") do
-        conf[:dirs] = true
+        conf.dirs = true
       end
     end
 
     def verify_output_dir!
-      unless conf[:dir]
+      unless conf.dir
         puts "--write param needed"
         exit 1
       end
     end
 
     def output_dir
-      conf[:dir]
+      conf.dir
     end
 
     def write_to_output_dir?

@@ -8,6 +8,8 @@ require 'optparse'
 require 'colored'
 
 def resilience_option_parser
+  conf.pages = true
+
   OptionParser.new do |opts|
     default_options   opts
     image_options     opts
@@ -57,7 +59,7 @@ def page_output(page)
              "object id #{page.object_id.indented(2).blue.bold} - "           \
              "records   #{page.entries.indented(2).blue.bold}\n"
 
-  page_out += page_attribute_output(page) if attributes_enabled? && page.has_attributes?
+  page_out += page_attribute_output(page) if conf.attributes? && page.has_attributes?
   page_out
 end
 
@@ -66,7 +68,7 @@ def pages_output
 end
 
 def object_table_output
-  return "" unless object_table_enabled?
+  return "" unless conf.object_table?
 
   output = image.object_table.pages.collect { |obj_id, cluster|
     "#{obj_id.little_endian[0..4]} | #{cluster.little_endian}\n"
@@ -78,7 +80,7 @@ def object_table_output
 end
 
 def object_tree_output
-  return "" unless object_tree_enabled?
+  return "" unless conf.object_tree?
 
   output = image.object_tree.map.collect { |obj, refs|
     references = refs.collect { |ref| ref[0..4] }.join(', ')

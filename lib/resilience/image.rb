@@ -4,6 +4,8 @@
 
 module Resilience
   class Image
+    include Conf
+
     attr_accessor :file
     attr_accessor :offset
     attr_accessor :opts
@@ -32,11 +34,11 @@ module Resilience
 
       # each of these is a seperate parsing process,
       # though later ones may depend on former
-      @pages        = Resilience::Page.extract_all
+      @pages        = Resilience::Page.extract_all  if conf.pages?
       @system_table = Resilience::SystemTable.parse
       @object_table = Resilience::ObjectTable.parse
       @root_dir     = Resilience::RootDir.parse
-      @object_tree  = Resilience::ObjectTree.parse
+      @object_tree  = Resilience::ObjectTree.parse  if conf.object_tree?
     end
 
     def seek(position)

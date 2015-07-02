@@ -34,7 +34,7 @@ def extract
 end
 
 def extract_cluster(cluster)
-  out = File.open("#{conf[:dir]}/#{cluster.to_s(16)}", 'wb')
+  out = File.open("#{conf.dir}/#{cluster.to_s(16)}", 'wb')
   offset = cluster * PAGE_SIZE
   image.seek(offset)
   contents = image.read(PAGE_SIZE)

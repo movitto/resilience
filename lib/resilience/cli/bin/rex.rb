@@ -20,12 +20,12 @@ def write_results(image)
 
   dirs  = image.root_dir.dirs
   dirs.each do |name, contents|
-    puts "Dir: #{name}" if output_dirs?
+    puts "Dir: #{name}" if conf.dirs?
   end
 
   files = image.root_dir.files
   files.each do |name, contents|
-    puts "File: #{name}" if output_files?
+    puts "File: #{name}" if conf.files?
 
     path = "#{output_dir}/#{name}".delete("\0")
     File.write(path, contents) if write_to_output_dir?
