@@ -4,3 +4,6 @@
 
 require 'resilience/fs_dir/dir_base'
 require 'resilience/fs_dir/record'
+
+require 'resilience/fs_dir/dir_entry'
+require 'resilience/fs_dir/file_entry'

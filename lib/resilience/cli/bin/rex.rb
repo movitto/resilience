@@ -19,15 +19,15 @@ def write_results(image)
   create_output_dir!
 
   dirs  = image.root_dir.dirs
-  dirs.each do |name, contents|
-    puts "Dir: #{name}" if conf.dirs?
+  dirs.each do |dir|
+    puts "Dir: #{dir.fullname}" if conf.dirs?
   end
 
   files = image.root_dir.files
-  files.each do |name, contents|
-    puts "File: #{name}" if conf.files?
+  files.each do |file|
+    puts "File: #{file.fullname}" if conf.files?
 
-    path = "#{output_dir}/#{name}".delete("\0")
-    File.write(path, contents) if write_to_output_dir?
+    path = "#{output_dir}/#{file.fullname}".delete("\0")
+    File.write(path, file.metadata) if write_to_output_dir?
   end
 end

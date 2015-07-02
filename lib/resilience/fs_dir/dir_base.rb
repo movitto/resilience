@@ -14,8 +14,8 @@ module Resilience
 
       def parse_dir_obj(object_id, prefix)
         object_table   = image.object_table
-        @dirs        ||= {}
-        @files       ||= {}
+        @dirs        ||= []
+        @files       ||= []
       
         page_id      = object_table.pages[object_id]
         page_address = page_id * PAGE_SIZE
@@ -90,15 +90,14 @@ module Resilience
         if entry_type == DIR_ENTRY
           dir_name = key_bytes[4..-1].pack('L*')
           dir_obj = value.unpack('C*')[0...8]
-          dirs["#{prefix}\\#{dir_name}"] = dir_obj
+          dirs << DirEntry.new(prefix, dir_name, dir_obj)
 
           dir_obj = [0, 0, 0, 0, 0, 0, 0, 0].concat(dir_obj)
           parse_dir_obj(dir_obj, "#{prefix}\\#{dir_name}")
       
         elsif entry_type == FILE_ENTRY
-          file_name = key_bytes[4..-1].pack('L*')
-          prefixed  = "#{prefix}\\#{file_name}"
-          files[prefixed] = value
+          filename = key_bytes[4..-1].pack('L*')
+          files <<  FileEntry.new(prefix, filename, value)
         end
       end
     end # class DirBase
