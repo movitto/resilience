@@ -11,10 +11,14 @@ module Resilience
       attr_accessor :name
       attr_accessor :metadata
 
-      def initialize(prefix, name, metadata)
-        @prefix   = prefix
-        @name     = name
-        @metadata = metadata
+      # offset in fs
+      attr_accessor :offset
+
+      def initialize(args={})
+        @prefix   = args[:prefix]
+        @name     = args[:name]
+        @metadata = args[:metadata]
+        @offset   = args[:offset]
       end
 
       def fullname

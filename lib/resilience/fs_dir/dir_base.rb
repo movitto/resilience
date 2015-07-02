@@ -90,14 +90,20 @@ module Resilience
         if entry_type == DIR_ENTRY
           dir_name = key_bytes[4..-1].pack('L*')
           dir_obj = value.unpack('C*')[0...8]
-          dirs << DirEntry.new(prefix, dir_name, dir_obj)
+          dirs << DirEntry.new(:prefix   => prefix,
+                               :name     => dir_name,
+                               :metadata => dir_obj,
+                               :offset   => image.pos)
 
           dir_obj = [0, 0, 0, 0, 0, 0, 0, 0].concat(dir_obj)
           parse_dir_obj(dir_obj, "#{prefix}\\#{dir_name}")
       
         elsif entry_type == FILE_ENTRY
           filename = key_bytes[4..-1].pack('L*')
-          files <<  FileEntry.new(prefix, filename, value)
+          files <<  FileEntry.new(:prefix   => prefix,
+                                  :name     => filename,
+                                  :metadata => value,
+                                  :offset   => image.pos)
         end
       end
     end # class DirBase
