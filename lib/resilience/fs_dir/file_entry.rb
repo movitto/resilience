@@ -11,20 +11,23 @@ module Resilience
       attr_accessor :name
       attr_accessor :metadata
 
-      # offset in fs
-      attr_accessor :offset
+      # metadata record
+      attr_accessor :record
 
       def initialize(args={})
         @prefix   = args[:prefix]
         @name     = args[:name]
         @metadata = args[:metadata]
-        @offset   = args[:offset]
+        @record   = args[:record]
       end
 
       def fullname
         "#{prefix}\\#{name}"
       end
 
+      def total_offset
+        image.offset + record.attribute.pos
+      end
     end # class FileEntry
   end # module FSDir
 end # module Resilience

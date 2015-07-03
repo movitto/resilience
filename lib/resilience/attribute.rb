@@ -6,10 +6,12 @@ module Resilience
   class Attribute
     include OnImage
 
+    attr_accessor :pos
     attr_accessor :bytes
 
     def initialize(args={})
-      @bytes = args[:bytes] if args.key?(:bytes)
+      @pos   = args[:pos]
+      @bytes = args[:bytes]
     end
 
     def empty?
@@ -25,7 +27,7 @@ module Resilience
 
       image.seek pos
       value = image.read(attr_len)
-      new(:bytes => value)
+      new(:pos => pos, :bytes => value)
     end
 
     def unpack(format)

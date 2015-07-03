@@ -93,7 +93,7 @@ module Resilience
           dirs << DirEntry.new(:prefix   => prefix,
                                :name     => dir_name,
                                :metadata => dir_obj,
-                               :offset   => image.pos)
+                               :record   => record)
 
           dir_obj = [0, 0, 0, 0, 0, 0, 0, 0].concat(dir_obj)
           parse_dir_obj(dir_obj, "#{prefix}\\#{dir_name}")
@@ -103,7 +103,7 @@ module Resilience
           files <<  FileEntry.new(:prefix   => prefix,
                                   :name     => filename,
                                   :metadata => value,
-                                  :offset   => image.pos)
+                                  :record   => record)
         end
       end
     end # class DirBase
