@@ -13,7 +13,9 @@ def fcomp_option_parser
   end
 end
 
-def write_results
+def write_results(image)
+  puts "Analyzed:"
+  puts "#{image.root_dir.files.collect { |f| f.fullname }.join("\n")}"
   different_bytes = image.root_dir.files.bytes_diff
   0.upto(different_bytes.size-1) do |byte_index|
     next if different_bytes[byte_index].nil?

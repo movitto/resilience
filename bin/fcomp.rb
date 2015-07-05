@@ -12,5 +12,4 @@ optparse = fcomp_option_parser
 optparse.parse!
 
 verify_image!
-parse_image
-write_results
+write_results parse_image
