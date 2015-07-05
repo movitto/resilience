@@ -2,7 +2,7 @@
 # ReFS Page Representation
 # Copyright (C) 2015 Red Hat Inc.
 
-require 'resilience/pages'
+require 'resilience/collections/pages'
 
 module Resilience
   class Page
