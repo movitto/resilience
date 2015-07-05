@@ -1,6 +1,6 @@
 Reslience Commands:
 
-- axe.rb    :
+- axe.rb    : print specific file attributes to stdout
 
 - clum.py   : iterates over fs by page, dumping out page numbers of
               metadata and non-null pages
@@ -19,4 +19,4 @@ Reslience Commands:
 - rex.rb    : extract fs dirs & files, printing them via stdout and/or
               to the local filesystem
 
-- rinfo.rb
+- rinfo.rb  : print high level fs info to stdout
