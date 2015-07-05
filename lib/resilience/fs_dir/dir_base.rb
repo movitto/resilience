@@ -3,6 +3,8 @@
 # Copyright (C) 2014-2015 Red Hat Inc.
 
 require 'fileutils'
+require 'resilience/collections/dirs'
+require 'resilience/collections/files'
 
 module Resilience
   module FSDir
@@ -14,8 +16,8 @@ module Resilience
 
       def parse_dir_obj(object_id, prefix)
         object_table   = image.object_table
-        @dirs        ||= []
-        @files       ||= []
+        @dirs        ||= Dirs.new
+        @files       ||= Files.new
       
         page_id      = object_table.pages[object_id]
         page_address = page_id * PAGE_SIZE
