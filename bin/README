@@ -1,0 +1,22 @@
+Reslience Commands:
+
+- axe.rb    :
+
+- clum.py   : iterates over fs by page, dumping out page numbers of
+              metadata and non-null pages
+
+- fcomp.rb  : file metadata comparison utility, compares metadata of
+              all files in fs byte-by-byte
+
+- pex.rb    : page extractor, extract specific pages and writes them to
+              local filesystem
+
+- rarser.rb : display overall filesystem and specific page & structure
+              metadata via stdout
+
+- reach.rb  : retrieve / display pages containing file metadata
+
+- rex.rb    : extract fs dirs & files, printing them via stdout and/or
+              to the local filesystem
+
+- rinfo.rb
