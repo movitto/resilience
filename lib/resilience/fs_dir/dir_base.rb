@@ -101,7 +101,7 @@ module Resilience
           parse_dir_obj(dir_obj, "#{prefix}\\#{dir_name}")
       
         elsif entry_type == FILE_ENTRY
-          filename = key_bytes[4..-1].pack('L*')
+          filename = key_bytes[4..-1].pack('C*')
           files <<  FileEntry.new(:prefix   => prefix,
                                   :name     => filename,
                                   :metadata => value,
