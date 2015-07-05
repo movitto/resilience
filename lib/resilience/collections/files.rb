@@ -4,6 +4,18 @@
 
 module Resilience
   class Files < Array
+    def names
+      collect { |f| f.name }
+    end
+
+    def fullnames
+      collect { |f| f.fullname }
+    end
+
+    def at(path)
+      find { |f| f.fullname == path }
+    end
+
     def byte_map
       bytes = []
       each do |file|
