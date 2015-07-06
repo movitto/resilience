@@ -14,8 +14,8 @@ class Fixnum
     '0x' + to_s(16).rjust(places, '0').upcase
   end
 
-  def little_endian
-    [self].little_endian
+  def big_endian_str
+    [self].big_endian_str
   end
 end
 
@@ -26,7 +26,7 @@ class NilClass
 end
 
 class Array
-  def little_endian
+  def big_endian_str
     str = '0x'
     value = false
     reverse_each { |b|

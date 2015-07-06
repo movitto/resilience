@@ -44,7 +44,7 @@ def object_table_output
   return "" unless conf.object_table?
 
   output = image.object_table.pages.collect { |obj_id, cluster|
-    "#{obj_id.little_endian[0..4]} | #{cluster.little_endian}\n"
+    "#{obj_id.big_endian_str[0..4]} | #{cluster.big_endian_str}\n"
   }.join
 
   "\nObject table:\n" \
