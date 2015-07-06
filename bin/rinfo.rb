@@ -13,6 +13,7 @@ include Resilience::CLI
 optparse = rinfo_option_parser
 optparse.parse!
 
+boot2offset
 verify_image!
 parse_image
 dump_info

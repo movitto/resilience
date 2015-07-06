@@ -10,6 +10,7 @@ def rinfo_option_parser
   OptionParser.new do |opts|
     default_options    opts
     image_options      opts
+    disk_options       opts
   end
 end
 

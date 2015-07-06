@@ -2,6 +2,8 @@
 # ReFS Constants
 # Copyright (C) 2015 Red Hat Inc.
 
+FS_SIGNATURE  = [0x00, 0x00, 0x00, 0x52, 0x65, 0x46, 0x53, 0x00] # ...ReFS.
+
 PAGE_SIZE     =  0x4000
 
 ROOT_DIR_ID   = [0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0]

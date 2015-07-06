@@ -50,7 +50,7 @@ module Resilience
     end
 
     def total_pos
-      @file.pos + offset
+      @file.pos
     end
 
     def read(len)
