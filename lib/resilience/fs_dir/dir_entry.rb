@@ -6,6 +6,7 @@ require 'fileutils'
 
 module Resilience
   module FSDir
+    # Directory Entry corresponding to subdirectory
     class DirEntry
       attr_accessor :prefix
       attr_accessor :name
@@ -15,18 +16,18 @@ module Resilience
       attr_accessor :record
 
       def initialize(args={})
-        @prefix   = args[:prefix]
-        @name     = args[:name]
-        @metadata = args[:metadata]
-        @record   = args[:record]
+        @prefix     = args[:prefix]
+        @name       = args[:name]
+        @metadata   = args[:metadata]
+        @record     = args[:record]
       end
 
       def fullname
         "#{prefix}\\#{name}"
       end
 
-      def disk_offset
-        image.offset + dir.record.attribute.pos
+      def total_offset
+        image.offset + record.attribute.pos
       end
     end # class DirEntry
   end # module FSDir

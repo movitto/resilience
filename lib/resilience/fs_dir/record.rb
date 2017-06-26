@@ -4,6 +4,8 @@
 
 module Resilience
   module FSDir
+    # A filesystem attribute which contains a key / value pair whose offsets & lengths
+    # are defined in the attribute header
     class Record
       include OnImage
   
@@ -16,7 +18,7 @@ module Resilience
       def self.read
         new(Attribute.read)
       end
-  
+
       def calc_boundries
         return if @boundries_set
         @boundries_set = true

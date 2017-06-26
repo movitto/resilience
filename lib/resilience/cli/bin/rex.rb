@@ -28,6 +28,7 @@ def write_results(image)
     puts "File: #{file.fullname} at #{file.total_offset}" if conf.files?
 
     path = "#{output_dir}/#{file.fullname}".delete("\0")
-    File.write(path, file.metadata) if write_to_output_dir?
+    #File.write(path, file.metadata) if write_to_output_dir?
+    File.write(path, file.record.attribute.bytes) if write_to_output_dir?
   end
 end

@@ -3,6 +3,8 @@
 # Copyright (C) 2015 Red Hat Inc.
 
 module Resilience
+  # Core image class, dispatches to various other classes
+  # parse FS constructs (objects, pages, etc)
   class Image
     include Conf
 

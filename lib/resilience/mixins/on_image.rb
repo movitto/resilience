@@ -3,6 +3,8 @@
 # Copyright (C) 2015 Red Hat Inc.
 
 module Resilience
+  # Helper module mixed into various classes allowing easy read
+  # access to the underyling disk image
   module OnImage
     def self.included(base)
       base.extend(ClassMethods)

@@ -6,6 +6,7 @@ require 'fileutils'
 
 module Resilience
   module FSDir
+    # Directory Entry corresponding to file
     class FileEntry
       attr_accessor :prefix
       attr_accessor :name
@@ -43,9 +44,9 @@ module Resilience
         attr3_length    = metadata_dwords[attr1_dwords + attr2_dwords]
         # there may be other attrs after this point...
 
-        attr1 = metadata_bytes[0..attr1_length]
-        attr2 = metadata_bytes[attr1_length..attr1_length+attr2_length]
-        attr3 = metadata_bytes[attr1_length+attr2_length..attr1_length+attr2_length+attr3_length]
+        attr1 = metadata_bytes[0..attr1_length-1]
+        attr2 = metadata_bytes[attr1_length..attr1_length+attr2_length-1]
+        attr3 = metadata_bytes[attr1_length+attr2_length..attr1_length+attr2_length+attr3_length-1]
         @metadata_attrs = [attr1, attr2, attr3]
       end
     end # class FileEntry

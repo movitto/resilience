@@ -5,6 +5,9 @@
 require 'resilience/collections/pages'
 
 module Resilience
+  # A Page aka Cluster is the basic organizational unit of the ReFS filesystem.
+  # It is a unit of fixed length (see constants.rb) and corresponds to directories
+  # and major constructs in the filesystem (object table, volume info, etc)
   class Page
     include OnImage
 

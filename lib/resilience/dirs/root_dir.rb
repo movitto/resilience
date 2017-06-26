@@ -3,6 +3,7 @@
 # Copyright (C) 2015 Red Hat Inc.
 
 module Resilience
+  # Root directory of the filesystem
   class RootDir < FSDir::DirBase
     include OnImage
 

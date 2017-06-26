@@ -24,11 +24,18 @@ end
 def write_results
   file = image.root_dir.files.at(conf.file)
   validate_file!(file)
-  puts "File: #{file.fullname} attributes: "
+
+  puts "==="
+  puts "File: #{file.fullname}"
+
+  puts "Metadata:"
+  print format_bytes(file.metadata.unpack("C*"), 16, 4)
+  puts "\n\n"
+
   file.metadata_attrs.each_index { |attr_index|
     attr = file.metadata_attrs[attr_index]
-    print "Attribute #{attr_index}: "
-    print attr.collect { |b| b.to_s(16) }.join(' ')
+    puts "Attribute #{attr_index}: "
+    print format_bytes(attr, 16, 4)
     puts "\n\n"
   }
 end

@@ -1,17 +1,22 @@
-#!/usr/bin/ruby
-# ReFS Attributes
+# ReFS Attribute
 # Copyright (C) 2015 Red Hat Inc.
 
 module Resilience
+  # FS component of a length specified by it's first four bytes.
+  #
+  # Attributes may exist as standalone entities in the file system or may
+  # correspond to directory Records and Lists (see corresponding classes)
   class Attribute
     include OnImage
 
     attr_accessor :pos
     attr_accessor :bytes
+    attr_accessor :len
 
     def initialize(args={})
       @pos   = args[:pos]
       @bytes = args[:bytes]
+      @len   = args[:len]
     end
 
     def empty?
@@ -24,10 +29,11 @@ module Resilience
       return new if packed.nil?
       attr_len = packed.unpack('L').first
       return new if attr_len == 0
+puts "len #{attr_len.to_s(16)}"
 
       image.seek pos
       value = image.read(attr_len)
-      new(:pos => pos, :bytes => value)
+      new(:pos => pos, :bytes => value, :len => attr_len)
     end
 
     def unpack(format)

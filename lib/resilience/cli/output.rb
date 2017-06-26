@@ -80,5 +80,17 @@ module Resilience
                               "#{sectors_per_cluster_output} = " \
                               "#{cluster_size_output}"
     end
+
+    def format_bytes(bytes, bytes_per_col, cols_per_row)
+      formatted = ''
+      bytes.each_slice(bytes_per_col) { |s1|
+        s1.each_slice(cols_per_row) { |s2|
+          formatted += s2.collect { |b| c = b.to_s(16) ; c.size < 2 ? "0#{c}" : c }.join(' ')
+          formatted += "  " 
+        }
+        formatted += "\n"
+      }
+      formatted
+    end
   end # module CLI
 end # module Resilience

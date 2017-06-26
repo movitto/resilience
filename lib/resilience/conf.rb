@@ -1,4 +1,3 @@
-#!/usr/bin/ruby
 # Reslience Conf
 #
 # Licensed under the MIT license
