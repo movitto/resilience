@@ -32,7 +32,7 @@ module Resilience
       # read number of objects from index header
       image.seek(object_page_address + ADDRESSES[:first_attr])
       first_attr  = Attribute.read
-      num_objects = first_attr.unpack('L*')[ADDRESSES[:num_objects]/4]
+      num_objects = first_attr.dwords[ADDRESSES[:num_objects]/4]
 
       # start of table attr, skip for now
       Attribute.read

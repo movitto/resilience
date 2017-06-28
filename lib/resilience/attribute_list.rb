@@ -6,22 +6,67 @@ module Resilience
   class AttributeList
     include OnImage
 
-    attr_accessor :len
+    # List header is a small attribute which appears at the start of the list
+    class Header
+      include OnImage
+
+      attr_accessor :attribute
+
+      def initialize(attr)
+        @attribute = attr
+      end
+
+      def self.read
+        new Attribute.read
+      end
+
+      def self.parse(pos, bytes)
+        new Attribute.parse(pos, bytes)
+      end
+
+      # From my observations this is always 0x20
+      def len
+        @len ||= attribute.dwords[0]
+      end
+
+      def total_len
+        @total_len ||= attribute.dwords[1]
+      end
+
+      def body_len
+        @body_len ||= total_len - len
+      end
+
+      # XXX: Not 100% sure this field corresponds to padding (but it often lines up like so)
+      def padding
+        @padding ||= attribute.dwords[2]
+      end
+
+      def type
+        @type ||= attribute.dwords[3]
+      end
+
+      def end_pos
+        @end_pos ||= attribute.dwords[4]
+      end
+
+      def flags
+        @flags ||= attribute.dwords[5]
+      end
+
+      def next_pos
+        @next_pos ||= attribute.dwords[6]
+      end
+    end
+
+    attr_accessor :header
     attr_accessor :pos
-    attr_accessor :end_pos
-    attr_accessor :type
-    attr_accessor :flags
-
     attr_accessor :bytes
-
     attr_accessor :attributes
 
     def initialize(args={})
-      @len        = args[:len]
+      @header     = args[:header]
       @pos        = args[:pos]
-      @end_pos    = args[:end_pos]
-      @flags      = args[:flags]
-      @type       = args[:type]
       @bytes      = args[:bytes]
       @attributes = args[:attributes]
     end
@@ -31,22 +76,10 @@ module Resilience
     end
 
     def self.read
-      orig_pos            = image.pos
-      table_header_attr   = Attribute.read
-      table_header_dwords = table_header_attr.unpack("L*")
-      header_len          = table_header_dwords[0]
-      table_len           = table_header_dwords[1]
-      padding             = table_header_dwords[2]
-      type                = table_header_dwords[3]
-      end_pos             = table_header_dwords[4]
-      flags               = table_header_dwords[5]
-      next_pos            = table_header_dwords[6]
-puts  "AL #{orig_pos.to_s(16)}/#{type.to_s(16)}/#{flags.to_s(16)}"
-
-      remaining_len       = table_len - header_len
-      puts "remaining #{remaining_len.to_s(16)}"
-      orig_pos            = image.pos
-      bytes               = image.read remaining_len
+      header        = Header.read
+      remaining_len = header.body_len
+      orig_pos      = image.pos
+      bytes         = image.read remaining_len
       image.seek orig_pos
 
       attributes = []
@@ -56,16 +89,35 @@ puts  "AL #{orig_pos.to_s(16)}/#{type.to_s(16)}/#{flags.to_s(16)}"
         remaining_len -= attributes.last.len
       end
 
-      image.seek orig_pos - header_len + end_pos
+      image.seek orig_pos - header.len + header.end_pos
 
-      #raise "Mismatched list" unless end_pos == image.pos
+      AttributeList.new :header     => header,
+                        :pos        => orig_pos,
+                        :bytes      => bytes,
+                        :attributes => attributes
+    end
 
-      AttributeList.new :len     => table_len,
-                        :pos     => orig_pos,
-                        :end_pos => end_pos,
-                        :flags   => flags,
-                        :type    => type,
-                        :bytes   => bytes,
+    def self.parse(pos, bytes)
+      header = Header.parse pos, bytes
+      remaining_len = header.body_len
+
+      attributes = []
+
+      until remaining_len == 0
+        start_pos   = pos + header.total_len - remaining_len
+        start_index = header.total_len - remaining_len
+
+        # XXX we don't know length of this attribute until we parse it,
+        #     thus we pass in all bytes starting at index w/ assumption
+        #     that Attribute.parse will only store what is applicable
+        attributes    << Attribute.parse(start_pos, bytes[start_index..-1])
+
+        remaining_len -= attributes.last.len
+      end
+
+      AttributeList.new :header     => header,
+                        :pos        => pos,
+                        :bytes      => bytes[header.len..-1],
                         :attributes => attributes
     end
 

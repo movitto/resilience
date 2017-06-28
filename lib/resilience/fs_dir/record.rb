@@ -10,6 +10,11 @@ module Resilience
       include OnImage
   
       attr_accessor :attribute
+
+      attr_accessor :key_offset,
+                    :key_length,
+                    :value_offset,
+                    :value_length
   
       def initialize(attribute)
         @attribute = attribute
@@ -23,7 +28,7 @@ module Resilience
         return if @boundries_set
         @boundries_set = true
   
-        header         = attribute.unpack('S*')
+        header         = attribute.words
         @key_offset    = header[2]
         @key_length    = header[3]
         @value_offset  = header[5]
@@ -39,7 +44,7 @@ module Resilience
         return if @flags_set
         @flags_set = true
   
-        @flags = attribute.unpack('S*')[4]
+        @flags = attribute.words[4]
       end
   
       def flags
@@ -49,12 +54,20 @@ module Resilience
   
       def key
         ko, kl, vo, vl = boundries
-        attribute.unpack('C*')[ko...ko+kl].pack('C*')
+        attribute.bytes[ko...ko+kl].pack('C*')
       end
   
       def value
         ko, kl, vo, vl = boundries
-        attribute.unpack('C*')[vo..-1].pack('C*')
+        attribute.bytes[vo..-1].pack('C*')
+      end
+
+      def value_pos
+        attribute.pos + value_offset
+      end
+
+      def key_pos
+        attribute.pos + key_offset
       end
     end # class Record
   end # module FSDir

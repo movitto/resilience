@@ -38,14 +38,15 @@ module Resilience
         Attribute.read
 
         # read directory page attribute list
+puts "! #{prefix}"
         attributes = AttributeList.read
         attributes.attributes.each { |attr|
           record = Record.new attr
 
-          if attributes.type == DIR_TREE
+          if attributes.header.type == DIR_TREE
             parse_dir_branch record, prefix
 
-          else #if attributes.type == DIR_LIST
+          else #if attributes.header.type == DIR_LIST
             unless exclude_dir_record(record)
               parse_dir_record record, prefix
             end

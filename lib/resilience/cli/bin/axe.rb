@@ -32,10 +32,10 @@ def write_results
   print format_bytes(file.metadata.unpack("C*"), 16, 4)
   puts "\n\n"
 
-  file.metadata_attrs.each_index { |attr_index|
-    attr = file.metadata_attrs[attr_index]
+  file.attributes.each_index { |attr_index|
+    attr = file.attributes[attr_index]
     puts "Attribute #{attr_index}: "
-    print format_bytes(attr, 16, 4)
+    print format_bytes(attr.bytes, 16, 4)
     puts "\n\n"
   }
 end
