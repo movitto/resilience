@@ -83,7 +83,10 @@ module Resilience
         entry_type = key_dwords.first
 
         if entry_type == DIR_ENTRY
-          dir_name = key_bytes[4..-1].pack('L*')
+          dir_name = key_bytes[4..-1]
+          dir_name.delete(0)
+          dir_name = dir_name.pack('C*')
+
           dir_obj = value.unpack('C*')[0...8]
           dirs << DirEntry.new(:prefix   => prefix,
                                :name     => dir_name,
@@ -97,6 +100,7 @@ module Resilience
           filename = key_bytes[4..-1]
           filename.delete(0)
           filename = filename.pack('C*')
+
 
           files <<  FileEntry.new(:prefix   => prefix,
                                   :name     => filename,

@@ -1,6 +1,5 @@
-#!/usr/bin/ruby
 # ReFS Directory File Entry
-# Copyright (C) 2014-2015 Red Hat Inc.
+# Copyright (C) 2014-2017 Red Hat Inc.
 
 require 'fileutils'
 

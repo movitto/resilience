@@ -39,4 +39,7 @@ def write_results
   puts "File len: 0x#{file.len.to_s(16)}"
 
   puts "Content Ptr: 0x#{file.content_ptr.to_s(16)}"
+
+  puts "Content:"
+  puts Resilience::FileContent.new(file).raw
 end
