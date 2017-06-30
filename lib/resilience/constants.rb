@@ -52,5 +52,8 @@ ADDRESSES  = {
   :object_tree_start1 => 0x10,
   :object_tree_end1   => 0x1F,
   :object_tree_start2 => 0x20,
-  :object_tree_end2   => 0x2F
+  :object_tree_end2   => 0x2F,
+
+  # in file entry
+  :file_len           => 0x3c
 }

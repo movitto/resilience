@@ -38,7 +38,6 @@ module Resilience
         Attribute.read
 
         # read directory page attribute list
-puts "! #{prefix}"
         attributes = AttributeList.read
         attributes.attributes.each { |attr|
           record = Record.new attr

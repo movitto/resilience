@@ -11,6 +11,7 @@ require 'resilience/conf'
 require 'resilience/fs_dir'
 require 'resilience/attribute'
 require 'resilience/attribute_list'
+require 'resilience/record'
 require 'resilience/page'
 require 'resilience/image'
 

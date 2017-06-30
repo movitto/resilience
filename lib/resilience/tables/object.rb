@@ -38,7 +38,7 @@ module Resilience
       Attribute.read
 
       0.upto(num_objects-1) do
-        object_record     = FSDir::Record.read
+        object_record     = Record.read
         object_id         = object_record.key.unpack('C*')
 
         # here object page is first qword of record value

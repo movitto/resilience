@@ -3,6 +3,8 @@
 
 module Resilience
   # List of attributes whose length / params is defined by its header
+  # Note: this might actually be a tree structure w/ references to children & leaves,
+  #       needs further investigation
   class AttributeList
     include OnImage
 
@@ -107,8 +109,7 @@ module Resilience
         start_pos   = pos + header.total_len - remaining_len
         start_index = header.total_len - remaining_len
 
-        # XXX we don't know length of this attribute until we parse it,
-        #     thus we pass in all bytes starting at index w/ assumption
+        # XXX pass in all bytes starting at index w/ assumption
         #     that Attribute.parse will only store what is applicable
         attributes    << Attribute.parse(start_pos, bytes[start_index..-1])
 

@@ -51,7 +51,7 @@ module Resilience
       return new if len == 0
 
       new(:pos   => pos,
-          :bytes => bytes[0..len-1], # XXX important that we only take len bytes, see AttributeList.parse
+          :bytes => bytes[0..len-1], # XXX important that we only take len bytes as invokers may pass in more
           :len   => len)
     end
 

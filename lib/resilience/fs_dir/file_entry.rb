@@ -51,16 +51,16 @@ module Resilience
       end
 
       def attr1
-        @attr1 ||= Attribute.new :pos   => attr1_start,
-                                 :bytes => attr1_bytes,
-                                 :len   => attr1_length
+        @attr1 ||= FileTimeStampsAttribute.new :pos   => attr1_start,
+                                               :bytes => attr1_bytes,
+                                               :len   => attr1_length
       end
 
       # XXX: from observation attribute 1 always contains the file timestamps
       alias :timestamps_attr :attr1
 
       def timestamps
-        # ...
+        timestamps_attr.formatted_timestamps
       end
 
       def attr2_start
@@ -83,28 +83,31 @@ module Resilience
 
       # XXX: from observation, attribute 2 is infact a header attribute for
       # an attribute list containing attributes w/ the file length and content pointer
-      def file_ref_header
-        @file_ref_header ||= AttributeList::Header.new attr2
+      def ref_header
+        @ref_header ||= AttributeList::Header.new attr2
       end
 
-      def file_ref_bytes
-        @file_ref_bytes ||= bytes[attr1_length..attr1_length + file_ref_header.total_len-1]
+      def ref_bytes
+        @ref_bytes ||= bytes[attr1_length..attr1_length + ref_header.total_len-1]
       end
 
-      def file_ref_attrs
-        @file_ref_attrs ||= AttributeList.parse(attr2_start, file_ref_bytes)
+      def ref_attr_list
+        @ref_attr_list ||= AttributeList.parse(attr2_start, ref_bytes)
       end
 
-      def file_len
-        # ...
+      # XXX: now here it gets a bit weird, the only observed item
+      # in the file ref attribute list is a single record containing
+      # a key and two attributes for values
+      def ref_record
+        @ref_record ||= FileRefRecord.new Record.new(ref_attr_list.attributes.first)
       end
 
-      def file_content_ptr
-        # ...
+      def len
+        @len ||= ref_record.len
       end
 
-      def attributes
-        @attributes ||= [timestamps_attr] + file_ref_attrs.attributes
+      def content_ptr
+        @content_ptr ||= ref_record.content_ptr
       end
     end # class FileEntry
   end # module FSDir
